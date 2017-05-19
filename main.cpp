@@ -5,17 +5,20 @@ using namespace std;
 
 bool exists(vector<int> avl_tree, int number)
 {
-
-
-
-  for (int i = 0; i < avl_tree.size(); ++i)
-  {
-  	if (avl_tree[i]==number)
-  	{
-  		return true;
-  	}
-  }
-  return false;
+	int index = 0;
+	while(index>=0 && index < avl_tree.size())
+	{
+		if (number > avl_tree[index])
+		{
+			index = index*2 + 2;
+		}else if (number < avl_tree[index])
+		{
+			index = index*2 + 1;
+		}else{
+			return true;
+		}
+	}
+	return false;
 }
 
 BinaryNode* appendNode(BinaryNode* node, vector<int> max_heap, int current_node)
@@ -28,7 +31,7 @@ BinaryNode* appendNode(BinaryNode* node, vector<int> max_heap, int current_node)
 		node->left_child = new BinaryNode(max_heap[index_left]);
 		appendNode(node->left_child,max_heap,index_left);
 	}
-	if (index_right)
+	if (index_right < max_heap.size())
 	{
 		node->right_child = new BinaryNode(max_heap[index_right]);
 		appendNode(node->right_child,max_heap,index_right);
